@@ -6,16 +6,10 @@ import modules.helper.ArrayMethods;
  */
 public class Cryptology {
 
-    static void genericPrintArray(char[] elements) {
-        System.out.printf("{");
-        for(char element: elements) {
-            System.out.printf("%s,", element);
-        }
-        System.out.printf("} \n");
-    }
-
-    static char[] encryptCharArray(char[] array) {
+    public String encryptString(String password) {
         ArrayMethods arrMethods = new ArrayMethods();
+
+        char[] array = password.toCharArray();
         char[] newArray = {};
 
         for (char item: array) {
@@ -26,11 +20,14 @@ public class Cryptology {
 
             newArray = arrMethods.pushChar(newArray, newChar);
         }
-        return newArray; 
+        String encrpytedPassword = new String(newArray);
+        return encrpytedPassword;
     }
 
-    static char[] decryptCharArray(char[] array) {
+    public String decryptString(String password) {
         ArrayMethods arrMethods = new ArrayMethods();
+
+        char[] array = password.toCharArray();
         char[] newArray = {};
 
         for (char item: array) {
@@ -41,7 +38,8 @@ public class Cryptology {
 
             newArray = arrMethods.pushChar(newArray, newChar);
         }
-        return newArray; 
+        String decryptedPassword = new String(newArray);
+        return decryptedPassword;
     }
 }
 

@@ -28,4 +28,11 @@ public class ArrayMethods {
         newArray[array.length] = element;
         return newArray;
     }
+
+    public void printStringArr(String[] array) {
+        for (String item: array) {
+            System.out.printf("%s ", item);
+        }
+        System.out.printf("\n");
+    }
 }

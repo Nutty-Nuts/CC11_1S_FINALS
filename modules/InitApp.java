@@ -11,10 +11,10 @@ public class InitApp {
         File initDir = new File("./storage");
 
         if (!initDir.exists()) {
-            System.out.printf("Data Storage has not been Initialized"); 
+            System.out.printf("Data Storage has not been Initialized \n"); 
             return false; 
         } else {
-            System.out.printf("Data Storage Exists");
+            System.out.printf("Data Storage Exists \n");
             return true;
         }
     }
