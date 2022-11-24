@@ -1,6 +1,7 @@
 import modules.InitApp;
 import modules.FileSystem;
 import modules.Cryptology;
+import modules.FileHandling;
 
 import modules.helper.ArrayMethods;
 
@@ -29,7 +30,11 @@ public class Main {
         arrMethods.printStringArr(files);
 
         Cryptology cryptology = new Cryptology();
-        System.out.printf("%s \n", cryptology.encryptString("Password"));
-        System.out.printf("%s \n", cryptology.decryptString("ƕǪɄɄɘȰȿǹ"));
+        FileHandling fileHandler = new FileHandling();
+
+        fileHandler.createFile("Facebook.com.txt", cryptology.encryptString("SamplePassword"));
+        fileHandler.editFile("Facebook.com.txt", cryptology.encryptString("ThereseAngeliEVega"));
+
+        fileHandler.printFile("Facebook.com.txt");
     }
 }
