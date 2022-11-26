@@ -1,0 +1,64 @@
+
+    public static String genPassword() {
+        char[] letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        char[] numbers = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+        char[] characters = {'~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '+', '=', '[', ']', '{', '}', '|', '\\', ':', ';', '"', '\'', '<', '>', ',', '.', '/', '?'};
+
+        char[] emptyPassord = new char[16];
+
+        boolean hasLetter = false;
+        boolean hasNumber = false;
+        boolean hasChar = false;
+
+        for (int i = 0; i < 15; i++) {
+            int index = 0;
+            int whatArray = (int) Math.round(Math.random() * 2);
+            if (hasLetter) {
+                index = (int) Math.round(Math.random() * letters.length - 1);
+                emptyPassord[i] = letters[index];
+                continue;
+            }
+            if (hasNumber) {
+                index = (int) Math.round(Math.random() * numbers.length - 1);
+                emptyPassord[i] = numbers[index];
+                continue;
+            }
+            if (hasChar) {
+                index = (int) Math.round(Math.random() * characters.length - 1);
+                emptyPassord[i] = characters[index];
+                continue;
+            }
+
+            switch (whatArray) {
+                case 0:
+                    index = (int) Math.round(Math.random() * letters.length - 1);
+                    emptyPassord[i] = letters[index];
+                case 1:
+                    index = (int) Math.round(Math.random() * numbers.length - 1);
+                    emptyPassord[i] = numbers[index];
+                case 2:
+                    index = (int) Math.round(Math.random() * characters.length - 1);
+                    emptyPassord[i] = characters[index];
+                default:
+            }
+        }
+
+        String newPassword = new String(emptyPassord);
+
+        return newPassword;
+    }
+            if (hasLetter == false) {
+                index = (int) Math.round(Math.random() * (letters.length));
+                emptyPassord[i] = letters[index];
+                hasLetter = true;
+            }
+            else if (hasNumber == false) {
+                index = (int) Math.round(Math.random() * (numbers.length));
+                emptyPassord[i] = numbers[index];
+                hasNumber = true;
+            }
+            else if (hasChar == false) {
+                index = (int) Math.round(Math.random() * (characters.length));
+                emptyPassord[i] = characters[index];
+                hasChar = true;
+            } else {

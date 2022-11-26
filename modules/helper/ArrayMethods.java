@@ -30,8 +30,10 @@ public class ArrayMethods {
     }
 
     public void printStringArr(String[] array) {
+        int index = 0;
         for (String item: array) {
-            System.out.printf("%s ", item);
+            System.out.printf("[%d] %s ",index, item);
+            index++;
         }
         System.out.printf("\n");
     }

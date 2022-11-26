@@ -15,7 +15,7 @@ import modules.Cryptology;
  */
 public class FileHandling {
     public void createFile(String fileName, String password) {
-        fileName = "storage/" + fileName;
+        fileName = "storage/" + fileName + ".txt";
         try {
             File fileObj = new File(fileName);
 
