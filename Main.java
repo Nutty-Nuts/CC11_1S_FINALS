@@ -56,11 +56,25 @@ public class Main {
                 
                 String service = scService.nextLine();
                 service = service + ".txt";
-                
-                Scanner scPassword = new Scanner(System.in);
-                System.out.printf("Password: ");
 
-                String password = scPassword.nextLine();
+                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
+                Scanner scPasswordMethod = new Scanner(System.in);
+                System.out.printf("Method: ");
+
+                int passwordMethod = scPasswordMethod.nextInt();
+
+                String password = "";
+
+                switch (passwordMethod) {
+                    case 0:
+                        Scanner scPassword = new Scanner(System.in);
+                        System.out.printf("Password: ");
+
+                        password = scPassword.nextLine();
+                        break;
+                    case 1:
+                        password = generator.genPassword();
+                }
 
                 fileHandler.createFile(service, cryptology.encryptString(password));
                 fileHandler.printFile(service);
@@ -75,10 +89,20 @@ public class Main {
                 int serviceIndex = scServiceEdit.nextInt();
                 String serviceEdit = files[serviceIndex];
 
-                Scanner scNewPassword = new Scanner(System.in);
-                System.out.printf("New Password: ");
+                int editPasswordMethod = scPasswordMethod.nextInt();
 
-                String newPassword = scNewPassword.nextLine();
+                String editPassword = "";
+
+                switch (editPasswordMethod) {
+                    case 0:
+                        Scanner scPassword = new Scanner(System.in);
+                        System.out.printf("Password: ");
+
+                        newPassword = scPassword.nextLine();
+                        break;
+                    case 1:
+                        newPassword = generator.genPassword();
+                }
 
                 fileHandler.editFile(serviceEdit, cryptology.encryptString(newPassword));
                 fileHandler.printFile(serviceEdit);
