@@ -89,9 +89,14 @@ public class Main {
                 int serviceIndex = scServiceEdit.nextInt();
                 String serviceEdit = files[serviceIndex];
 
-                int editPasswordMethod = scPasswordMethod.nextInt();
+                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
+                Scanner scPasswordEditMethod = new Scanner(System.in);
+                System.out.printf("Method: ");
+
+                int editPasswordMethod = scPasswordEditMethod.nextInt();
 
                 String editPassword = "";
+                String newPassword = "";
 
                 switch (editPasswordMethod) {
                     case 0:
