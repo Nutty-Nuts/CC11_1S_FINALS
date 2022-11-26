@@ -54,7 +54,8 @@ public class Main {
                 Scanner scService = new Scanner(System.in);
                 System.out.printf("Name of Service: ");
                 
-                String service = scService.nextLine() + ".txt";
+                String service = scService.nextLine();
+                service = service + ".txt";
                 
                 Scanner scPassword = new Scanner(System.in);
                 System.out.printf("Password: ");
@@ -80,7 +81,7 @@ public class Main {
                 String newPassword = scNewPassword.nextLine();
 
                 fileHandler.editFile(serviceEdit, cryptology.encryptString(newPassword));
-                fileHandler.printFile("Facebook.com.txt");
+                fileHandler.printFile(serviceEdit);
                 break;
             case 3: 
                 System.out.printf("Choose a service to edit: ");
@@ -93,6 +94,24 @@ public class Main {
                 String readService = files[readServiceIndex];
 
                 fileHandler.printFile(readService);
+                break;
+            case 4: 
+                System.out.printf("Choose a service to edit: ");
+                arrMethods.printStringArr(files);
+
+                Scanner scDeleteService = new Scanner(System.in);
+                System.out.printf("Enter Action: ");
+
+                int deleteServiceIndex = scDeleteService.nextInt();
+                String deleteService = files[deleteServiceIndex];
+               
+                fileHandler.deleteFile(deleteService);
+
+                files = fileSys.fetchFiles();
+
+                System.out.printf("\n");
+
+                arrMethods.printStringArr(files);
                 break;
         }
     }
