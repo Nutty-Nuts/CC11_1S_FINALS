@@ -21,7 +21,6 @@ public class InitApp {
 
     public void initStorage() {
         File initDir = new File("./storage");
-        System.out.printf("\n");
         System.out.printf("Generating Storage... \n");
 
         initDir.mkdir(); 

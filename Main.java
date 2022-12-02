@@ -18,6 +18,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.printf("\n");
+
         // Initialize App
         InitApp init = new InitApp();
         if (init.checkInit()) {
@@ -25,6 +27,7 @@ public class Main {
         } else {
             init.initStorage();
         }
+        System.out.printf("\n");
 
         // File System
         FileSystem fileSys = new FileSystem();
@@ -106,15 +109,15 @@ public class Main {
                 System.out.printf("Choose a service to edit: ");
                 arrMethods.printStringArr(files);
 
-                System.out.printf("Enter Action: ");
-                serviceIndex = ioHelper.checkInputValidity(files, scanner.nextInt());
+                System.out.printf("Enter Service: ");
+                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
                 service = files[serviceIndex]; 
+
+                System.out.printf("\n");
 
                 System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
                 System.out.printf("Method: ");
-                passwordMethod = scanner.nextInt();
-
-                System.out.printf("\n");
+                passwordMethod = ioHelper.inputMismatch(scanner);
 
                 switch (passwordMethod) {
                     case 0:
@@ -125,6 +128,7 @@ public class Main {
                         password = generator.genPassword();
                         break;
                     default:
+                        System.out.printf("\n");
                         System.out.printf("[ERROR][Not an option] \n"); 
                         System.exit(0);
                 }
@@ -154,6 +158,8 @@ public class Main {
                 System.out.printf("Enter Action: ");
                 serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
                 service = files[serviceIndex]; 
+
+                System.out.printf("\n");
                
                 fileHandler.deleteFile(service);
                 files = fileSys.fetchFiles();
