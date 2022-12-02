@@ -20,7 +20,7 @@ public class FileHandling {
             File fileObj = new File(fileName);
 
             if (fileObj.createNewFile()) {
-                System.out.printf("New password created \n");
+                System.out.printf("\u001B[42m\u001B[30m SUCCESS \u001B[0m\u001B[32m New password created \u001B[0m \n");
             } else {
                 System.out.printf("Password for this service already exists \n");
             }
@@ -60,7 +60,7 @@ public class FileHandling {
 
         try {
             if (fileObj.createNewFile()) {
-                System.out.printf("Password has been changed \n");
+                System.out.printf("\u001B[42m\u001B[30m SUCCESS \u001B[0m\u001B[32m Password has been changed \u001B[0m \n");
             } else {
                 System.out.printf("Failed to edit file \n");
             }

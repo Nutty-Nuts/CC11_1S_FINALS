@@ -18,6 +18,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.printf("\n");
+
         // Initialize App
         InitApp init = new InitApp();
         if (init.checkInit()) {
@@ -25,6 +27,8 @@ public class Main {
         } else {
             init.initStorage();
         }
+
+        System.out.printf("\n");
 
         // File System
         FileSystem fileSys = new FileSystem();
@@ -40,7 +44,7 @@ public class Main {
 
         String[] files = fileSys.fetchFiles();
 
-        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Quit \n");
+        System.out.printf("Actions: \u001B[36m [0] View all Passwords,\u001B[32m [1] Create a Password, [2], Edit a Password, [3] See a Password,\u001B[33m [4] Delete a Password, [5] Delete all Passwords,\u001B[31m [6] Quit \u001B[0m \n");
         System.out.printf("Enter Action: ");
         Scanner scanner = new Scanner(System.in);
 
@@ -50,7 +54,7 @@ public class Main {
             action = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.printf("\n");
-            System.out.printf("[ERROR][Please enter a number] \n"); 
+            System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Please enter a number \n"); 
             System.exit(0);
         }
 
@@ -69,7 +73,7 @@ public class Main {
                 arrMethods.printStringArr(files);
                 break;
             case 1:
-                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
+                System.out.printf("Password Method: \u001B[36m[0] Type Password, [1] Generate Password \u001B[0m \n");
                 System.out.printf("Method: ");
                 passwordMethod = ioHelper.inputMismatch(scanner);
 
@@ -78,7 +82,7 @@ public class Main {
                 switch (passwordMethod) {
                     case 0:
                         System.out.printf("Name of Service: ");
-                        service = scanner.next() + ".txt";
+                        service = scanner.nextLine() + ".txt";
 
                         System.out.printf("Password: ");
                         password = scanner.next();
@@ -90,7 +94,7 @@ public class Main {
                         password = generator.genPassword();
                         break;
                     default:
-                        System.out.printf("[ERROR][Not an option] \n"); 
+                        System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Not an option \n"); 
                         System.exit(0);
 
                 }
@@ -106,13 +110,15 @@ public class Main {
                 System.out.printf("Choose a service to edit: ");
                 arrMethods.printStringArr(files);
 
-                System.out.printf("Enter Action: ");
-                serviceIndex = ioHelper.checkInputValidity(files, scanner.nextInt());
+                System.out.printf("Enter Service: ");
+                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
                 service = files[serviceIndex]; 
 
-                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
+                System.out.printf("\n");
+
+                System.out.printf("Password Method: \u001B[36m[0] Type Password, [1] Generate Password \u001B[0m \n");
                 System.out.printf("Method: ");
-                passwordMethod = scanner.nextInt();
+                passwordMethod = ioHelper.inputMismatch(scanner);
 
                 System.out.printf("\n");
 
@@ -125,10 +131,9 @@ public class Main {
                         password = generator.genPassword();
                         break;
                     default:
-                        System.out.printf("[ERROR][Not an option] \n"); 
+                        System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Not an option \n"); 
                         System.exit(0);
                 }
-                System.out.printf("\n");
 
                 fileHandler.editFile(service, cryptology.encryptString(password));
                 fileHandler.printFile(service);
@@ -165,7 +170,7 @@ public class Main {
             case 5:
                 ioHelper.hasPassword(files);
 
-                System.out.printf("Are you sure you want to delete all passwords? [0] No, [1] Yes \n");
+                System.out.printf("Are you sure you want to delete all passwords?\u001B[31m [0] No,\u001B[32m [1] Yes \u001B[0m\n");
                 System.out.printf("Confirm: ");
                 int confirm = ioHelper.inputMismatch(scanner);
 
@@ -181,7 +186,7 @@ public class Main {
                         }
                         break;
                     default:
-                        System.out.printf("[ERROR][Not an option] \n"); 
+                        System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Not an option \n"); 
                         System.exit(0);
                 }
                 break;
@@ -189,7 +194,7 @@ public class Main {
                 System.out.printf("[Quitting Program] \n");
                 break;
             default:
-                System.out.printf("[ERROR][Not an option] \n"); 
+                System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Not an option \n"); 
                 break;
         }
     }

@@ -35,7 +35,7 @@ public class ArrayMethods {
             System.out.printf("[You have no Passwords]");
         }
         for (String item: array) {
-            System.out.printf("[%d] %s, ",index, item);
+            System.out.printf("\u001B[36m[%d] %s \u001B[0m",index, item);
             index++;
         }
         System.out.printf("\n");
