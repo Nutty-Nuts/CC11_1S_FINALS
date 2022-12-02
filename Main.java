@@ -44,7 +44,7 @@ public class Main {
 
         String[] files = fileSys.fetchFiles();
 
-        System.out.printf("Actions: \u001B[36m [0] View all Passwords,\u001B[32m [1] Create a Password, [2], Edit a Password, [3] See a Password,\u001B[33m [4] Delete a Password, [5] Delete all Passwords,\u001B[31m [6] Quit \u001B[0m \n");
+        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Quit \n");
         System.out.printf("Enter Action: ");
         Scanner scanner = new Scanner(System.in);
 
@@ -54,7 +54,7 @@ public class Main {
             action = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.printf("\n");
-            System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Please enter a number \n"); 
+            System.out.printf("ERROlease enter a number \n"); 
             System.exit(0);
         }
 
