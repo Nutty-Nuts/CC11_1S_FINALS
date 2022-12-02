@@ -6,7 +6,9 @@ import modules.StrengthChecker;
 import modules.Generator;
 
 import modules.helper.ArrayMethods;
+import modules.helper.IOHelper;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.File;
 /**
@@ -30,6 +32,7 @@ public class Main {
 
         // Printing Arrays
         ArrayMethods arrMethods = new ArrayMethods();
+        IOHelper ioHelper = new IOHelper();
 
         Cryptology cryptology = new Cryptology();
         StrengthChecker check = new StrengthChecker();
@@ -37,12 +40,27 @@ public class Main {
 
         String[] files = fileSys.fetchFiles();
 
-        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password \n");
-
-        Scanner sc = new Scanner(System.in);
+        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Quit \n");
         System.out.printf("Enter Action: ");
+        Scanner scanner = new Scanner(System.in);
 
-        int action = sc.nextInt();
+        int action = 0;
+
+        try {
+            action = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.printf("\n");
+            System.out.printf("[ERROR][Please enter a number] \n"); 
+            System.exit(0);
+        }
+
+        int passwordMethod = 0;
+        int serviceIndex = 0;
+
+        int[] choices = {};
+        
+        String password = "";
+        String service = "";
 
         System.out.printf("\n");
 
@@ -51,96 +69,127 @@ public class Main {
                 arrMethods.printStringArr(files);
                 break;
             case 1:
-                Scanner scService = new Scanner(System.in);
-                System.out.printf("Name of Service: ");
-                
-                String service = scService.nextLine();
-                service = service + ".txt";
-
                 System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
-                Scanner scPasswordMethod = new Scanner(System.in);
                 System.out.printf("Method: ");
+                passwordMethod = ioHelper.inputMismatch(scanner);
 
-                int passwordMethod = scPasswordMethod.nextInt();
-
-                String password = "";
+                System.out.printf("\n");
 
                 switch (passwordMethod) {
                     case 0:
-                        Scanner scPassword = new Scanner(System.in);
-                        System.out.printf("Password: ");
+                        System.out.printf("Name of Service: ");
+                        service = scanner.next() + ".txt";
 
-                        password = scPassword.nextLine();
+                        System.out.printf("Password: ");
+                        password = scanner.next();
                         break;
                     case 1:
+                        System.out.printf("Name of Service: ");
+                        service = scanner.next() + ".txt";
+
                         password = generator.genPassword();
+                        break;
+                    default:
+                        System.out.printf("[ERROR][Not an option] \n"); 
+                        System.exit(0);
+
                 }
+                System.out.printf("\n");
 
                 fileHandler.createFile(service, cryptology.encryptString(password));
                 fileHandler.printFile(service);
                 break;
+
             case 2: 
+                ioHelper.hasPassword(files);
+
                 System.out.printf("Choose a service to edit: ");
                 arrMethods.printStringArr(files);
 
-                Scanner scServiceEdit = new Scanner(System.in);
                 System.out.printf("Enter Action: ");
-
-                int serviceIndex = scServiceEdit.nextInt();
-                String serviceEdit = files[serviceIndex];
+                serviceIndex = ioHelper.checkInputValidity(files, scanner.nextInt());
+                service = files[serviceIndex]; 
 
                 System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
-                Scanner scPasswordEditMethod = new Scanner(System.in);
                 System.out.printf("Method: ");
+                passwordMethod = scanner.nextInt();
 
-                int editPasswordMethod = scPasswordEditMethod.nextInt();
+                System.out.printf("\n");
 
-                String editPassword = "";
-                String newPassword = "";
-
-                switch (editPasswordMethod) {
+                switch (passwordMethod) {
                     case 0:
-                        Scanner scPassword = new Scanner(System.in);
                         System.out.printf("Password: ");
-
-                        newPassword = scPassword.nextLine();
+                        password = scanner.next();
                         break;
                     case 1:
-                        newPassword = generator.genPassword();
+                        password = generator.genPassword();
+                        break;
+                    default:
+                        System.out.printf("[ERROR][Not an option] \n"); 
+                        System.exit(0);
                 }
+                System.out.printf("\n");
 
-                fileHandler.editFile(serviceEdit, cryptology.encryptString(newPassword));
-                fileHandler.printFile(serviceEdit);
+                fileHandler.editFile(service, cryptology.encryptString(password));
+                fileHandler.printFile(service);
                 break;
             case 3: 
-                System.out.printf("Choose a service to edit: ");
+                ioHelper.hasPassword(files);
+
+                System.out.printf("Choose a service to read: ");
                 arrMethods.printStringArr(files);
 
-                Scanner scReadService = new Scanner(System.in);
                 System.out.printf("Enter Action: ");
+                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
+                service = files[serviceIndex]; 
 
-                int readServiceIndex = scReadService.nextInt();
-                String readService = files[readServiceIndex];
-
-                fileHandler.printFile(readService);
+                fileHandler.printFile(service);
                 break;
             case 4: 
-                System.out.printf("Choose a service to edit: ");
+                ioHelper.hasPassword(files);
+
+                System.out.printf("Choose a service to delete: ");
                 arrMethods.printStringArr(files);
 
-                Scanner scDeleteService = new Scanner(System.in);
                 System.out.printf("Enter Action: ");
-
-                int deleteServiceIndex = scDeleteService.nextInt();
-                String deleteService = files[deleteServiceIndex];
+                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
+                service = files[serviceIndex]; 
                
-                fileHandler.deleteFile(deleteService);
-
+                fileHandler.deleteFile(service);
                 files = fileSys.fetchFiles();
 
                 System.out.printf("\n");
 
                 arrMethods.printStringArr(files);
+                break;
+            case 5:
+                ioHelper.hasPassword(files);
+
+                System.out.printf("Are you sure you want to delete all passwords? [0] No, [1] Yes \n");
+                System.out.printf("Confirm: ");
+                int confirm = ioHelper.inputMismatch(scanner);
+
+                System.out.printf("\n");
+                
+                switch (confirm) {
+                    case 0:
+                        System.out.printf("[Aborting Operation] \n");
+                        break;
+                    case 1:
+                        for (String item: files) {
+                            fileHandler.deleteFile(item);
+                        }
+                        break;
+                    default:
+                        System.out.printf("[ERROR][Not an option] \n"); 
+                        System.exit(0);
+                }
+                break;
+            case 6:
+                System.out.printf("[Quitting Program] \n");
+                break;
+            default:
+                System.out.printf("[ERROR][Not an option] \n"); 
                 break;
         }
     }

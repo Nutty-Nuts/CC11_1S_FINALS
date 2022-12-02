@@ -31,6 +31,9 @@ public class ArrayMethods {
 
     public void printStringArr(String[] array) {
         int index = 0;
+        if (array.length == 0) {
+            System.out.printf("[You have no Passwords]");
+        }
         for (String item: array) {
             System.out.printf("[%d] %s, ",index, item);
             index++;
