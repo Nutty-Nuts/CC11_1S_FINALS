@@ -27,6 +27,7 @@ public class Main {
         } else {
             init.initStorage();
         }
+        System.out.printf("\n");
 
         System.out.printf("\n");
 
@@ -121,6 +122,9 @@ public class Main {
                 passwordMethod = ioHelper.inputMismatch(scanner);
 
                 System.out.printf("\n");
+                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
+                System.out.printf("Method: ");
+                passwordMethod = ioHelper.inputMismatch(scanner);
 
                 switch (passwordMethod) {
                     case 0:
@@ -132,6 +136,8 @@ public class Main {
                         break;
                     default:
                         System.out.printf("\u001B[41m\u001B[30m ERROR \u001B[0m\u001B[31m Not an option \n"); 
+                        System.out.printf("\n");
+                        System.out.printf("[ERROR][Not an option] \n"); 
                         System.exit(0);
                 }
 
@@ -159,6 +165,8 @@ public class Main {
                 System.out.printf("Enter Action: ");
                 serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
                 service = files[serviceIndex]; 
+
+                System.out.printf("\n");
                
                 fileHandler.deleteFile(service);
                 files = fileSys.fetchFiles();

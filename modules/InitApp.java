@@ -21,7 +21,11 @@ public class InitApp {
 
     public void initStorage() {
         File initDir = new File("./storage");
+<<<<<<< HEAD
         System.out.printf("\u001B[33m \u27F3 Generating Storage... \u001B[0m \n");
+=======
+        System.out.printf("Generating Storage... \n");
+>>>>>>> temp
 
         initDir.mkdir(); 
 
