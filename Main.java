@@ -1,16 +1,11 @@
-import modules.InitApp;
-import modules.FileSystem;
 import modules.Cryptology;
 import modules.FileHandling;
-import modules.StrengthChecker;
-import modules.Generator;
+import modules.Password;
 
-import modules.helper.ArrayMethods;
+import modules.helper.ArrayHelper;
 import modules.helper.IOHelper;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.io.File;
 /**
  * Main
  */
@@ -19,43 +14,22 @@ public class Main {
     public static void main(String[] args) {
         System.out.printf("\n");
 
-        // Initialize App
-        InitApp init = new InitApp();
-        if (init.checkInit()) {
-            // do nothing
-        } else {
-            init.initStorage();
-        }
-        System.out.printf("\n");
-
-        // File System
-        FileSystem fileSys = new FileSystem();
+        // File Handling
         FileHandling fileHandler = new FileHandling();
 
-        // Printing Arrays
-        ArrayMethods arrMethods = new ArrayMethods();
+        // Helper Classes
+        ArrayHelper arrMethods = new ArrayHelper();
         IOHelper ioHelper = new IOHelper();
 
+        // Password Related Tools
         Cryptology cryptology = new Cryptology();
-        StrengthChecker check = new StrengthChecker();
-        Generator generator = new Generator();
+        Password passTool = new Password();
 
-        String[] files = fileSys.fetchFiles();
+        // Initialize Storage for Password Files
+        fileHandler.initStorage();
 
-        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Quit \n");
-        System.out.printf("Enter Action: ");
-        Scanner scanner = new Scanner(System.in);
-
+        // Initialize Variables
         int action = 0;
-
-        try {
-            action = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.printf("\n");
-            System.out.printf("[ERROR][Please enter a number] \n"); 
-            System.exit(0);
-        }
-
         int passwordMethod = 0;
         int serviceIndex = 0;
 
@@ -64,109 +38,76 @@ public class Main {
         String password = "";
         String service = "";
 
-        System.out.printf("\n");
+        String[] passwordInformation;
+        String[] files = fileHandler.fetchFiles();
+
+        /*
+         * Start of Program
+        */
+        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Quit \n");
+        System.out.printf("Enter Action: ");
+        Scanner scanner = new Scanner(System.in);
+         
+        action = ioHelper.inputMismatch(scanner);
 
         switch (action) {
+            // View All Files
             case 0:
                 arrMethods.printStringArr(files);
                 break;
+            // Create a Password File
             case 1:
-                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
-                System.out.printf("Method: ");
+                ioHelper.choosePasswordMethod();
                 passwordMethod = ioHelper.inputMismatch(scanner);
 
-                System.out.printf("\n");
+                System.out.printf("Name of Service: ");
+                service = scanner.next() + ".txt";
 
-                switch (passwordMethod) {
-                    case 0:
-                        System.out.printf("Name of Service: ");
-                        service = scanner.next() + ".txt";
+                password = ioHelper.makePassword(passwordMethod, scanner);
 
-                        System.out.printf("Password: ");
-                        password = scanner.next();
-                        break;
-                    case 1:
-                        System.out.printf("Name of Service: ");
-                        service = scanner.next() + ".txt";
-
-                        password = generator.genPassword();
-                        break;
-                    default:
-                        System.out.printf("[ERROR][Not an option] \n"); 
-                        System.exit(0);
-
-                }
-                System.out.printf("\n");
-
-                fileHandler.createFile(service, cryptology.encryptString(password));
+                fileHandler.createFile(service, password);
                 fileHandler.printFile(service);
                 break;
-
+            // Edit a Password File
             case 2: 
                 ioHelper.hasPassword(files);
+                ioHelper.displayFiles(files);
 
-                System.out.printf("Choose a service to edit: ");
-                arrMethods.printStringArr(files);
+                service = ioHelper.selectFile(files, scanner);
 
-                System.out.printf("Enter Service: ");
-                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
-                service = files[serviceIndex]; 
+                ioHelper.choosePasswordMethod();
 
-                System.out.printf("\n");
-
-                System.out.printf("Password Method: [0] Type Password, [1] Generate Password \n");
-                System.out.printf("Method: ");
                 passwordMethod = ioHelper.inputMismatch(scanner);
+                password = ioHelper.makePassword(passwordMethod, scanner);
 
-                switch (passwordMethod) {
-                    case 0:
-                        System.out.printf("Password: ");
-                        password = scanner.next();
-                        break;
-                    case 1:
-                        password = generator.genPassword();
-                        break;
-                    default:
-                        System.out.printf("\n");
-                        System.out.printf("[ERROR][Not an option] \n"); 
-                        System.exit(0);
-                }
-                System.out.printf("\n");
-
-                fileHandler.editFile(service, cryptology.encryptString(password));
+                fileHandler.editFile(service, password);
                 fileHandler.printFile(service);
+
                 break;
+            // See a Password
             case 3: 
                 ioHelper.hasPassword(files);
+                ioHelper.displayFiles(files);
 
-                System.out.printf("Choose a service to read: ");
-                arrMethods.printStringArr(files);
-
-                System.out.printf("Enter Action: ");
-                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
-                service = files[serviceIndex]; 
+                service = ioHelper.selectFile(files, scanner);
 
                 fileHandler.printFile(service);
                 break;
+            // Delete a Password
             case 4: 
                 ioHelper.hasPassword(files);
+                ioHelper.displayFiles(files);
 
-                System.out.printf("Choose a service to delete: ");
-                arrMethods.printStringArr(files);
+                service = ioHelper.selectFile(files, scanner);
 
-                System.out.printf("Enter Action: ");
-                serviceIndex = ioHelper.checkInputValidity(files, ioHelper.inputMismatch(scanner));
-                service = files[serviceIndex]; 
-
-                System.out.printf("\n");
-               
                 fileHandler.deleteFile(service);
-                files = fileSys.fetchFiles();
+                files = fileHandler.fetchFiles();
 
                 System.out.printf("\n");
 
                 arrMethods.printStringArr(files);
                 break;
+            // Delete All Passwords
             case 5:
                 ioHelper.hasPassword(files);
 
@@ -174,8 +115,6 @@ public class Main {
                 System.out.printf("Confirm: ");
                 int confirm = ioHelper.inputMismatch(scanner);
 
-                System.out.printf("\n");
-                
                 switch (confirm) {
                     case 0:
                         System.out.printf("[Aborting Operation] \n");
@@ -190,6 +129,7 @@ public class Main {
                         System.exit(0);
                 }
                 break;
+            // Quit the Program
             case 6:
                 System.out.printf("[Quitting Program] \n");
                 break;

@@ -1,13 +1,13 @@
 package modules;
 
-import modules.helper.ArrayMethods;
+import modules.helper.ArrayHelper;
 /**
  * Encryption
  */
 public class Cryptology {
 
     public String encryptString(String password) {
-        ArrayMethods arrMethods = new ArrayMethods();
+        ArrayHelper arrMethods = new ArrayHelper();
 
         char[] array = password.toCharArray();
         char[] newArray = {};
@@ -23,9 +23,8 @@ public class Cryptology {
         String encrpytedPassword = new String(newArray);
         return encrpytedPassword;
     }
-
     public String decryptString(String password) {
-        ArrayMethods arrMethods = new ArrayMethods();
+        ArrayHelper arrMethods = new ArrayHelper();
 
         char[] array = password.toCharArray();
         char[] newArray = {};
