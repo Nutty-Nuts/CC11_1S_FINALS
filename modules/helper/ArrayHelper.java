@@ -1,4 +1,5 @@
 package modules.helper;
+import modules.helper.ErrorMessageHelper;
 
 /**
  * ArrayMethods
@@ -28,14 +29,14 @@ public class ArrayHelper {
         return newArray;
     }
     public void printStringArr(String[] array) {
+        ErrorMessageHelper errMsg = new ErrorMessageHelper();
         int index = 0;
         if (array.length == 0) {
-            System.out.printf("[WARNING][You have no Passwords]");
+            errMsg.noPasswords();
         }
         for (String item: array) {
-            System.out.printf("[%d] %s, ",index, item);
+            System.out.printf("[%d] %s\n, ",index, item);
             index++;
         }
-        System.out.printf("\n");
     }
 }

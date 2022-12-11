@@ -2,6 +2,7 @@ package modules.helper;
 
 import modules.Password;
 import modules.helper.ArrayHelper;
+import modules.helper.ErrorMessageHelper;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -11,35 +12,39 @@ import java.util.InputMismatchException;
 public class IOHelper {
 
     public int checkInputValidity(String[] array, int input) {
+        ErrorMessageHelper errMsg = new ErrorMessageHelper();
         int length = array.length - 1;
         if (input > length || input < 0) {
             System.out.printf("\n");
-            System.out.printf("[ERROR][Not an option] \n"); 
+            errMsg.notAnOptionError();
             System.exit(0);
 
             return 0;
         } else return input;
     }
     public void hasPassword(String[] array) {
+        ErrorMessageHelper errMsg = new ErrorMessageHelper();
         if (array.length == 0) {
-            System.out.printf("[WARNING][You have no Passwords] \n");
+            errMsg.noPasswords();
             System.exit(0);
         } 
         return;
     }
     public int inputMismatch(Scanner sc) {
+        ErrorMessageHelper errMsg = new ErrorMessageHelper();
         try {
             int input = sc.nextInt();
             System.out.printf("\n");
             return input;
         } catch (InputMismatchException e) {
             System.out.printf("\n");
-            System.out.printf("[ERROR][Please enter a number] \n"); 
+            errMsg.notANumberError();
             System.exit(0);
         }
         return 0;
     }
     public String makePassword(int passwordMethod, Scanner sc) {
+        ErrorMessageHelper errMsg = new ErrorMessageHelper();
         Password passTool = new Password();
         String password = "";
 
@@ -53,7 +58,7 @@ public class IOHelper {
                 password = passTool.genPassword();
                 break;
             default:
-                System.out.printf("[ERROR][Not an option] \n"); 
+                errMsg.notAnOptionError();
                 System.exit(0);
         }
         return password;

@@ -4,6 +4,7 @@ import modules.Password;
 
 import modules.helper.ArrayHelper;
 import modules.helper.IOHelper;
+import modules.helper.ErrorMessageHelper;
 
 import java.util.Scanner;
 /**
@@ -20,6 +21,7 @@ public class Main {
         // Helper Classes
         ArrayHelper arrMethods = new ArrayHelper();
         IOHelper ioHelper = new IOHelper();
+        ErrorMessageHelper errMsg = new ErrorMessageHelper();
 
         // Password Related Tools
         Cryptology cryptology = new Cryptology();
@@ -116,7 +118,7 @@ public class Main {
 
                 switch (confirm) {
                     case 0:
-                        System.out.printf("[Aborting Operation] \n");
+                        errMsg.quittingProgram();
                         break;
                     case 1:
                         for (String item: files) {
@@ -124,7 +126,7 @@ public class Main {
                         }
                         break;
                     default:
-                        System.out.printf("[ERROR][Not an option] \n"); 
+                        errMsg.notAnOptionError();
                         System.exit(0);
                 }
                 break;
@@ -141,10 +143,10 @@ public class Main {
                 break;
             // Quit the Program
             case 7:
-                System.out.printf("[Quitting Program] \n");
+                errMsg.quittingProgram();
                 break;
             default:
-                System.out.printf("[ERROR][Not an option] \n"); 
+                errMsg.notAnOptionError();
                 break;
         }
     }

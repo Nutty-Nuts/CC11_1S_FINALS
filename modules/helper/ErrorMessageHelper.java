@@ -14,4 +14,7 @@ public class ErrorMessageHelper {
     public void quittingProgram() {
         System.out.printf("WARN  Quitting Program");
     }
+    public void noPasswords() {
+        System.out.printf("WARN No Exsisting Passwords \n");
+    }
 }
