@@ -44,7 +44,7 @@ public class Main {
         /*
          * Start of Program
         */
-        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Quit \n");
+        System.out.printf("Actions: [0] View all Passwords, [1] Create a Password, [2], Edit a Password, [3] See a Password, [4] Delete a Password, [5] Delete all Passwords, [6] Check Strength [7] Quit \n");
         System.out.printf("Enter Action: ");
         Scanner scanner = new Scanner(System.in);
          
@@ -82,7 +82,6 @@ public class Main {
 
                 fileHandler.editFile(service, password);
                 fileHandler.printFile(service);
-
                 break;
             // See a Password
             case 3: 
@@ -129,8 +128,19 @@ public class Main {
                         System.exit(0);
                 }
                 break;
-            // Quit the Program
+            // Check Password Strength
             case 6:
+                ioHelper.hasPassword(files);
+                ioHelper.displayFiles(files);
+
+                service = ioHelper.selectFile(files, scanner);
+                password = fileHandler.fetchPassword(service);
+
+                if (passTool.checker(password)) System.out.printf("Strength: Good \n");
+                else System.out.printf("Strength: Bad \n");
+                break;
+            // Quit the Program
+            case 7:
                 System.out.printf("[Quitting Program] \n");
                 break;
             default:

@@ -107,4 +107,20 @@ public class FileHandling {
             e.printStackTrace();
         }
     }
+    public String fetchPassword(String fileName) {
+        String password = "";
+        try {
+            fileName = "storage/" + fileName;
+
+            File fileObj = new File(fileName);
+            Scanner scanner = new Scanner(fileObj);
+            Cryptology crypt = new Cryptology();
+
+            password = crypt.decryptString(scanner.nextLine());
+        } catch (FileNotFoundException e) {
+            System.out.printf("An error has occured \n");
+            e.printStackTrace();
+        }
+        return password;
+    }
 }
